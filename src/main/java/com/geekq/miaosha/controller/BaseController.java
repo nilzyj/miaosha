@@ -17,7 +17,6 @@ import java.io.OutputStream;
 @Controller
 public class BaseController {
 
-
     //加一个配置项
     @Value("#{'${pageCache.enbale}'}")
     private boolean pageCacheEnable;
@@ -28,12 +27,10 @@ public class BaseController {
     @Autowired
     RedisService redisService;
 
-
     public String render(HttpServletRequest request, HttpServletResponse response, Model model, String tplName, KeyPrefix prefix, String key) {
         if(!pageCacheEnable) {
             return tplName;
         }
-        //取缓存
         String html = redisService.get(prefix, key, String.class);
         if(!StringUtils.isEmpty(html)) {
             out(response, html);
